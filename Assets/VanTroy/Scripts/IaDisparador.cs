@@ -2,25 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Disparador : MonoBehaviour
+public class IaDisparador : MonoBehaviour
 {
     [SerializeField] private Transform disparador;
     [SerializeField] private GameObject proyectil;
-    public playerMovement playerMovement;
+    public IaMovement IaMovement;
     private float UltimoDisparo = 0f;
     private float Countdown = 0f;
 
+    private void Start()
+    {
+        IaMovement=GetComponentInParent<IaMovement>();
+    }
     void Update()
     {
         UltimoDisparo += Time.deltaTime;
         Countdown += Time.deltaTime;
 
-        if (Input.GetButton("Fire1"))
+        if (IaMovement.distanciaAlObjetivo<IaMovement.alcanceDisparo)
         {
-            if (UltimoDisparo >= playerMovement.Reload)
+            if (UltimoDisparo >= IaMovement.Reload)
             {
                 Disparar();
-                if (Countdown >= playerMovement.Reload)
+                if (Countdown >= IaMovement.Reload)
                 {
                     UltimoDisparo = 0f;
                 }
