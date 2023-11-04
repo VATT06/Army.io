@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Proyectil : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
+    public playerMovement playerMovement;
 
 
     void Update()

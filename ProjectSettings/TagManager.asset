@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Jugador
+  - Farmers
   layers:
   - Default
   - TransparentFX

@@ -6,7 +6,7 @@ public class Disparador : MonoBehaviour
 {
     [SerializeField] private Transform disparador;
     [SerializeField] private GameObject proyectil;
-    public PlayerMovement playerMovement;
+    public playerMovement playerMovement;
     private float UltimoDisparo = 0f;
     private float Countdown = 0f;
 
