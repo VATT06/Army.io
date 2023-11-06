@@ -48,7 +48,7 @@ public class IaMovement : MonoBehaviour
 
     private void SelectedDirection()
     {
-        if (standbyMode == true)
+        if (standbyMode == true && objetivo == null)
         {
             int indexObjetivo = Random.Range(0, Resources.Count);
             objetivo = Resources[indexObjetivo].gameObject;

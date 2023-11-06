@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ClassManager : MonoBehaviour
 {
-    public PlayerMovement Clase;
+    public playerMovement Clase;
     public GameObject PosFinal;
     private float ClasePosition;
     public bool Selected = false;
