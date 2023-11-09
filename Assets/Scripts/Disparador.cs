@@ -1,35 +1,36 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Disparador : MonoBehaviour
+public class Disparador : MonoBehaviourPun
 {
     [SerializeField] private Transform disparador;
-    [SerializeField] private GameObject proyectil;
-    public playerMovement playerMovement;
+
+    public PlayerMovement playerMovement;
     private float UltimoDisparo = 0f;
-    private float Countdown = 0f;
+
+
 
     void Update()
     {
-        UltimoDisparo += Time.deltaTime;
-        Countdown += Time.deltaTime;
+        if (!photonView.IsMine) return;
 
+        UltimoDisparo += Time.deltaTime;
         if (Input.GetButton("Fire1"))
         {
             if (UltimoDisparo >= playerMovement.Reload)
             {
                 Disparar();
-                if (Countdown >= playerMovement.Reload)
-                {
-                    UltimoDisparo = 0f;
-                }
+                photonView.RPC(nameof(Disparar), RpcTarget.Others);
             }
         }
     }
 
-    private void Disparar()
+    [PunRPC]
+    public void Disparar()
     {
-        Instantiate(proyectil, disparador.position, disparador.rotation);
+        BalaPool.instance.GetBala(playerMovement, disparador);
+        UltimoDisparo = 0f;
     }
 }

@@ -118,8 +118,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 0}
-  Triangle: {fileID: 0}
-  Hexagon: {fileID: 0}
   life: 1
 --- !u!95 &4918168078052361809
 Animator:

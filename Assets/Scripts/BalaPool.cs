@@ -42,7 +42,7 @@ public class BalaPool : MonoBehaviour
     public GameObject GetBala(Vector3 pos, PlayerMovement parent)
     {
         GameObject toReturn = balaList.Find(bala => bala.activeInHierarchy == false);
-        if(toReturn == null)
+        if (toReturn == null)
         {
             toReturn = Instantiate(balaPrefab, pos, Quaternion.identity);
             balaList.Add(toReturn);
