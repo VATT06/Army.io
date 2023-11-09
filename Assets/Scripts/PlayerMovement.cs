@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using JetBrains.Annotations;
 using System.Runtime.CompilerServices;
 using Photon.Pun;
+using UnityEngine.Animations;
 
 public class PlayerMovement : MonoBehaviourPun
 {
@@ -29,14 +30,11 @@ public class PlayerMovement : MonoBehaviourPun
     [Header("Ui In Game")]
     public GameObject Stadistics;
     public GameObject Clase;
-    //public GameObject[] etapa;
     public Button Sniper;
     public Button[] StatsButton;
 
 
     //Niveles de Stats
-    //[Header("StatsUI")]
-    //public TextMeshProUGUI LMH, LHR, LBD, LBS, LBP, LBuD, LR, LV; //Valor en UI
     private float LevelMaxHealth;
     private float LevelHealthRegen;
     private float LevelBodyDamage;
@@ -50,27 +48,23 @@ public class PlayerMovement : MonoBehaviourPun
     public ClassManager ClassManager;
 
     [Header("Movement")]
-    [SerializeField] private Vector2 Direction;
-    [SerializeField] private Vector3 objetivo;
-    [SerializeField] private Camera camara;
     private Rigidbody2D rb2d;
-    
+    public float velocidadRotacion = 500f;
+    public float velocidadMovimiento = 5f;
+
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        
+        transform.rotation = Quaternion.Euler(0, 0, 90);
     }
 
 
     void Update()
     {
+        RotarPersonaje();
+        
 
-        Direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        objetivo = camara.ScreenToWorldPoint(Input.mousePosition);
-        float anguloRadianes = Mathf.Atan2(objetivo.y - transform.position.y, objetivo.x - transform.position.x);
-        float anguloGrados = (180 / Mathf.PI) * anguloRadianes - 90;
-        transform.rotation = Quaternion.Euler(0, 0, anguloGrados);
         Stats();
 
         if (MaxHealth <= 0f)
@@ -92,19 +86,29 @@ public class PlayerMovement : MonoBehaviourPun
 
     private void FixedUpdate()
     {
-        rb2d.MovePosition(rb2d.position + Direction * Velocity * Time.fixedDeltaTime);
+        
     }
+    
+    void RotarPersonaje()
+    {
+        float inputHorizontal = Input.GetAxis("Horizontal");
+        float inputVertical = Input.GetAxis("Vertical");
 
+        Vector2 direccionMovimiento = new Vector2(inputHorizontal, inputVertical);
+        float inputMagnitud = Mathf.Clamp01(direccionMovimiento.magnitude);
+        direccionMovimiento.Normalize();
+
+        transform.Translate(direccionMovimiento * Velocity * inputMagnitud * Time.deltaTime, Space.World);
+
+        if (direccionMovimiento != Vector2.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(transform.forward, direccionMovimiento);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, velocidadRotacion * Time.deltaTime);
+            
+        }
+    }
     public void Stats()
     {
-        //HPRegen(); //Alpha1
-        //MaxHP(); //Alpha2
-        //BodyDam(); //Alpha3
-        //BulletFast(); //Alpha4
-        //BulletPen(); //Alpha5
-        //BulletDam(); //Alpha6
-        //Reloaded(); //Alpha7
-        //MovementSpeed(); //Alpha8
         LevelUp();
     }
     public void TeclaPresionada(KeyCode key)

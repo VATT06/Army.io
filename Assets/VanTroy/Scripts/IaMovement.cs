@@ -10,6 +10,7 @@ public class IaMovement : MonoBehaviour
     public bool standbyMode = true;
     public bool persuitMode = false;
     public bool runawayMode = false;
+    public PlayerMovement jugador;
 
     [Header("Stats")]
     public float Level;
@@ -29,9 +30,11 @@ public class IaMovement : MonoBehaviour
 
     void Start()
     {
-        FarmersInScene = GameObject.FindGameObjectsWithTag("Farmers");
+        FarmersInScene = GameObject.FindGameObjectsWithTag("HexaDest");
+        FarmersInScene = GameObject.FindGameObjectsWithTag("TrianDest");
+        FarmersInScene = GameObject.FindGameObjectsWithTag("SquareDest");
         rb2d = GetComponent<Rigidbody2D>();
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Jugador");
     }
 
     void Update()
@@ -144,5 +147,18 @@ public class IaMovement : MonoBehaviour
     {
         Resources.Capacity = FarmersInScene.Length;
         Resources = FarmersInScene.ToList<GameObject>();
+    }
+
+    private void OnCollisionEnter2D(Collider other)
+    {
+        if (other.gameObject.CompareTag("jugador"))
+        {
+            currentHealth -= jugador.BulletDamage;
+            if (currentHealth <= 0)
+            {
+                this.gameObject.SetActive(false);
+                Destroy(this);
+            }
+        }
     }
 }

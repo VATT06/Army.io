@@ -1,47 +1,55 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class LevelManager : MonoBehaviourPunCallbacks
+public class LevelManager : MonoBehaviour
 {
-    public Transform[] SpawnRojo, SpawnAzul;
+    public static LevelManager Instance;
+    [SerializeField] private GameObject loaderCanvas;
+    [SerializeField] private Image progressbar;
+    private float target;
 
-    public GameObject jugadorPrefab;
-    public void NuevoJugador()
+    private void Awake()
     {
-        bool team = Random.Range(0, 2) == 1;
-        Vector3 spawnPos = Vector3.zero;   
-        if (team)
+        if (Instance == null)
         {
-            spawnPos = SpawnRojo[Random.Range(0, SpawnRojo.Length)].position;
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            spawnPos = SpawnAzul[Random.Range(0, SpawnAzul.Length)].position;
-
+            Destroy(gameObject);
         }
-
-        PhotonNetwork.Instantiate(jugadorPrefab.name, spawnPos, Quaternion.identity);
     }
-
-    void Start()
+    public async void LoadScene(string sceneName)
     {
-        if (PhotonNetwork.IsConnected)
+        target = 0f;
+        progressbar.fillAmount = 0f;
+        var scene = SceneManager.LoadSceneAsync(sceneName);
+        scene.allowSceneActivation = false;
+
+        loaderCanvas.SetActive(true);
+
+        do
         {
-            NuevoJugador();
-        }
+            await Task.Delay(10);
+            target = scene.progress;
+        } while (scene.progress < 0.9f);
+
+        await Task.Delay(1000);
+        scene.allowSceneActivation = true;
+        loaderCanvas.SetActive(true);
+
     }
 
-    
-    void Update()
+    private void Update()
     {
-        
+        progressbar.fillAmount = Mathf.MoveTowards(progressbar.fillAmount, target, 3 * Time.deltaTime);
     }
 }
 
 
-public enum Equipo
-{
-    None, Rojo, Azul
-}

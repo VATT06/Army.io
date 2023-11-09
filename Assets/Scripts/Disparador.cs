@@ -9,8 +9,13 @@ public class Disparador : MonoBehaviourPun
 
     public PlayerMovement playerMovement;
     private float UltimoDisparo = 0f;
+    //public AudioClip ShootSound;
+    private AudioSource audioSource;
 
-
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -22,6 +27,8 @@ public class Disparador : MonoBehaviourPun
             if (UltimoDisparo >= playerMovement.Reload)
             {
                 Disparar();
+                audioSource.Play();
+                
                 photonView.RPC(nameof(Disparar), RpcTarget.Others);
             }
         }

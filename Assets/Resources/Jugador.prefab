@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 7851591580958758410}
   - component: {fileID: 7851591580958758409}
   - component: {fileID: 7851591580958758408}
-  - component: {fileID: 7851591580958758412}
-  - component: {fileID: 7851591580958758413}
+  - component: {fileID: 813915568}
+  - component: {fileID: 813915569}
   m_Layer: 0
   m_Name: Jugador
-  m_TagString: Jugador
+  m_TagString: Enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0, g: 0.4764049, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.6746811, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -127,7 +127,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &7851591580958758412
+--- !u!114 &813915568
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,61 +136,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 7851591580958758423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce0baf2491e18ca429ed5eb7ef4d812b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 0
-  Score: 0
-  MaxHealth: 10
-  HealthRegen: 1
-  Health: 0
-  BodyDamage: 1
-  BulletSpeed: 2
-  BulletPenetration: 0
-  BulletDamage: 2
-  Reload: 1.5
-  Velocity: 3
-  Estadisticas:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  Nivel: {fileID: 0}
-  Puntos: {fileID: 0}
-  StatsPointNum: {fileID: 0}
-  StatsPoint: {fileID: 0}
-  Square: {fileID: 0}
-  Triangle: {fileID: 0}
-  Hexagon: {fileID: 0}
-  Stadistics: {fileID: 0}
-  Clase: {fileID: 0}
-  etapa:
-  - {fileID: 0}
-  etapa1: 0
-  etapa2: 0
-  ClasePos: {fileID: 0}
-  ClassManager: {fileID: 0}
-  Direction: {x: 0, y: 0}
-  objetivo: {x: 0, y: 0, z: 0}
-  camara: {fileID: 0}
---- !u!114 &7851591580958758413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7851591580958758423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cc861aadc41dad48a5090755a1b7519, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bbb9c5cec9a34b4eb15449c689dd60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   disparador: {fileID: 7851591582860134346}
-  playerMovement: {fileID: 7851591580958758412}
+  proyectil: {fileID: 5094182782849214886, guid: cf65bfb5281a7d14b944203d088e845e, type: 3}
+  IaMovement: {fileID: 0}
+--- !u!114 &813915569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851591580958758423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ce67ac061ee54b42aebdcf2ed897559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Resources: []
+  FarmersInScene: []
+  player: {fileID: 0}
+  standbyMode: 1
+  persuitMode: 0
+  runawayMode: 0
+  Level: 0
+  MaxHealth: 0
+  HealthRegen: 2
+  currentHealth: 100
+  BodyDamage: 2
+  BulletSpeed: 10
+  BulletPenetration: 0
+  BulletDamage: 2
+  Reload: 2
+  Velocity: 3
+  alcanceDisparo: 9
+  distanciaAlObjetivo: 11
+  Direction: {x: 0, y: 0}
+  objetivo: {fileID: 0}
+  camara: {fileID: 0}
 --- !u!1 &7851591581044475118
 GameObject:
   m_ObjectHideFlags: 0

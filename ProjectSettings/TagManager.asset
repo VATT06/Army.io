@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Jugador
   - Farmers
+  - Bala
+  - TrianDest
+  - HexaDest
+  - SquareDest
+  - Enemigo
   layers:
   - Default
   - TransparentFX
@@ -13,11 +18,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - BackGround
+  - Calles
+  - Estructuras
+  - Arboles
+  - Icon
   - 
   - 
   - 
