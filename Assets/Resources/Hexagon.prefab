@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5901716196370242048}
   - component: {fileID: 5901716196370242049}
   - component: {fileID: 5901716196370242050}
+  - component: {fileID: 8419977582767434943}
   m_Layer: 6
   m_Name: Hexagon
   m_TagString: HexaDest
@@ -31,7 +32,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5901716196370242170}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.09, y: -3.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -235,3 +236,15 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &8419977582767434943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5901716196370242170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c929e590c819484fb2138d00343090b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

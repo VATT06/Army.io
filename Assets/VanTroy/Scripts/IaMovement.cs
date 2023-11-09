@@ -7,10 +7,10 @@ public class IaMovement : MonoBehaviour
     public List<GameObject> Resources = new List<GameObject>();
     public GameObject[] FarmersInScene = new GameObject[] { };
     public GameObject player;
+    public GameObject farmer;
     public bool standbyMode = true;
     public bool persuitMode = false;
     public bool runawayMode = false;
-    public PlayerMovement jugador;
 
     [Header("Stats")]
     public float Level;
@@ -19,8 +19,10 @@ public class IaMovement : MonoBehaviour
     public float BulletSpeed = 10f, BulletPenetration, BulletDamage;
     public float Reload = 2f;
     public float Velocity = 3f;
-    public float alcanceDisparo = 9f;
-    public float distanciaAlObjetivo = 0f;
+    public float alcanceDisparo = 5f;
+    public float distanciaEstacionamiento_Resources = 3f;
+    public float distanciaAlObjetivo;
+    public float distanciaPlayer = 0f;
 
     [Header("Movement")]
     [SerializeField] private Vector2 Direction;
@@ -30,9 +32,7 @@ public class IaMovement : MonoBehaviour
 
     void Start()
     {
-        FarmersInScene = GameObject.FindGameObjectsWithTag("HexaDest");
-        FarmersInScene = GameObject.FindGameObjectsWithTag("TrianDest");
-        FarmersInScene = GameObject.FindGameObjectsWithTag("SquareDest");
+       //FarmersInScene = GameObject.FindGameObjectsWithTag("Farmers");
         rb2d = GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag("Jugador");
     }
@@ -40,21 +40,41 @@ public class IaMovement : MonoBehaviour
     void Update()
     {
         SelectedDirection();
-        Stats();
+        //Stats();
         FindResourcesInScene();
+        Morir();
     }
 
     private void FixedUpdate()
     {
         PersuitPlayer();
+        PersuitResources();
     }
 
-    private void SelectedDirection()
+    public void SelectedDirection()
     {
-        if (standbyMode == true)
+        if (standbyMode == true && (objetivo == null || !objetivo.activeInHierarchy))
         {
-            int indexObjetivo = Random.Range(0, Resources.Count);
-            objetivo = Resources[indexObjetivo].gameObject;
+            float distanciaMinima = float.MaxValue;
+            GameObject agricultorMasCercano = null;
+
+            foreach (GameObject agricultor in Resources)
+            {
+                if (!agricultor.activeInHierarchy) continue; // Saltar agricultores desactivados
+
+                float distancia = Vector2.Distance(transform.position, agricultor.transform.position);
+                if (distancia < distanciaMinima)
+                {
+                    distanciaMinima = distancia;
+                    agricultorMasCercano = agricultor;
+                }
+            }
+
+            if (agricultorMasCercano != null)
+            {
+                farmer = agricultorMasCercano;
+                objetivo = agricultorMasCercano;
+            }
         }
         Direction = new Vector2(objetivo.transform.position.x - transform.position.x,
             objetivo.transform.position.y - transform.position.y).normalized;
@@ -62,29 +82,41 @@ public class IaMovement : MonoBehaviour
         float anguloRadianes = Mathf.Atan2(objetivo.transform.position.y - transform.position.y, objetivo.transform.position.x - transform.position.x);
         float anguloGrados = (180 / Mathf.PI) * anguloRadianes - 90;
         transform.rotation = Quaternion.Euler(0, 0, anguloGrados);
-        distanciaAlObjetivo = PlayerDistance();
-        Debug.Log(distanciaAlObjetivo);
+        distanciaPlayer = PlayerDistance();
+        distanciaAlObjetivo = ObjectiveDistance();
+        Debug.Log("Distancia al objetivo: " + distanciaPlayer);
+        Debug.Log("Distania al Player: " + distanciaAlObjetivo);
     }
 
-    private void PersuitPlayer()
+    public void PersuitPlayer()
     {
-        if (distanciaAlObjetivo < alcanceDisparo && currentHealth >= 50f)
+        if (distanciaPlayer < alcanceDisparo && currentHealth >= 50f)
         {
             standbyMode = false;
             persuitMode = true;
             objetivo = player;
             rb2d.MovePosition(rb2d.position + Direction * Velocity * Time.fixedDeltaTime);
-            if (distanciaAlObjetivo > alcanceDisparo) { standbyMode = true; objetivo = null; }
         }
-        if (distanciaAlObjetivo < alcanceDisparo && currentHealth < 50)
+        if (distanciaPlayer < alcanceDisparo && currentHealth < 50)
         {
             persuitMode = false;
             runawayMode = true;
             objetivo = player;
             rb2d.MovePosition(rb2d.position + Direction * Velocity * Time.fixedDeltaTime * -1);
-            if (distanciaAlObjetivo > alcanceDisparo) { standbyMode = true; objetivo = null; }
+            //if (distanciaAlObjetivo >= alcanceDisparo) { standbyMode = true; persuitMode = false; objetivo = null; }
         }
+        if (distanciaPlayer > alcanceDisparo) { standbyMode = true; persuitMode = false; objetivo = null; }
         // Agrega un caso para volver a standbyMode cuando corresponda.
+    }
+    public void PersuitResources()
+    {
+        rb2d.MovePosition(rb2d.position + Direction * Velocity * Time.fixedDeltaTime);
+        if (distanciaAlObjetivo < distanciaEstacionamiento_Resources)
+        {
+            Debug.Log("Recurso dentro del alcance");
+            rb2d.MovePosition(rb2d.position + Direction * 0 * Time.fixedDeltaTime);
+
+        }
     }
 
     public void Stats()
@@ -138,8 +170,15 @@ public class IaMovement : MonoBehaviour
 
     public float PlayerDistance()
     {
-        Vector3 distanciaAlPlayer = objetivo.transform.position - transform.position;
+        Vector3 distanciaAlPlayer = player.transform.position - transform.position;
         float distance = distanciaAlPlayer.magnitude;
+        return distance;
+    }
+
+    public float ObjectiveDistance()
+    {
+        Vector3 distanciaAlObjectivo = objetivo.transform.position - transform.position;
+        float distance = distanciaAlObjectivo.magnitude;
         return distance;
     }
 
@@ -149,16 +188,24 @@ public class IaMovement : MonoBehaviour
         Resources = FarmersInScene.ToList<GameObject>();
     }
 
-    private void OnCollisionEnter2D(Collider other)
+    public void Morir()
     {
-        if (other.gameObject.CompareTag("jugador"))
+        if (currentHealth<1)
         {
-            currentHealth -= jugador.BulletDamage;
-            if (currentHealth <= 0)
-            {
-                this.gameObject.SetActive(false);
-                Destroy(this);
-            }
+            Destroy(gameObject);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bala"))
+        {
+            currentHealth -= 2.5f;
+            Destroy(collision.gameObject);
+        }
+    }
+
+
 }
+
+

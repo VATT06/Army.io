@@ -11,6 +11,8 @@ TagManager:
   - HexaDest
   - SquareDest
   - Enemigo
+  - Enemy
+  - iaBala
   layers:
   - Default
   - TransparentFX

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cef0d1dc35a55c4ba32e6562dc5fc92, type: 3}
+  m_Name: BaseEnemy
+  m_EditorClassIdentifier: 
+  Level: 0
+  MaxHealth: 0
+  HealthRegen: 0
+  currentHealth: 0
+  BodyDamage: 0
+  BulletSpeed: 0
+  BulletPenetration: 0
+  BulletDamage: 0
+  Reload: 0
+  Velocity: 0
+  alcanceDisparo: 0
+  distanciaEstacionamiento_Resources: 0

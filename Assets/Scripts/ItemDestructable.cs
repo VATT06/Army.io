@@ -6,6 +6,7 @@ using UnityEngine;
 public class ItemDestructable : MonoBehaviourPun
 {
     public PlayerMovement Bala;
+    public IaMovement iaBala;
     public float life = 4f;
     public float experience;
     public float damage = 0.6f;
