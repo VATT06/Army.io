@@ -6,7 +6,6 @@ using UnityEngine;
 public class ItemDestructable : MonoBehaviourPun
 {
     public PlayerMovement Bala;
-    public IaMovement iaBala;
     public float life = 4f;
     public float experience;
     public float damage = 0.6f;
@@ -23,7 +22,9 @@ public class ItemDestructable : MonoBehaviourPun
         if (life <= 0)
         {
             anim.SetBool("Death", true);
+            //Destroy(this.gameObject);
             Destroy(this);
+
         }
     }
 
@@ -43,6 +44,7 @@ public class ItemDestructable : MonoBehaviourPun
             if (life <= 0)
             {
                 anim.SetBool("Death", true);
+                //Destroy(this.gameObject);
                 Destroy(this);
             }
         }

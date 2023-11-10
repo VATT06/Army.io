@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class IaMovement : MonoBehaviour
@@ -32,7 +33,7 @@ public class IaMovement : MonoBehaviour
 
     void Start()
     {
-       //FarmersInScene = GameObject.FindGameObjectsWithTag("Farmers");
+        FarmersInScene = GameObject.FindGameObjectsWithTag("Farmers");
         rb2d = GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag("Jugador");
     }
@@ -60,7 +61,10 @@ public class IaMovement : MonoBehaviour
 
             foreach (GameObject agricultor in Resources)
             {
-                if (!agricultor.activeInHierarchy) continue; // Saltar agricultores desactivados
+                if (!agricultor.activeInHierarchy)
+                {
+                    continue; // Saltar agricultores desactivados
+                }
 
                 float distancia = Vector2.Distance(transform.position, agricultor.transform.position);
                 if (distancia < distanciaMinima)
@@ -76,17 +80,30 @@ public class IaMovement : MonoBehaviour
                 objetivo = agricultorMasCercano;
             }
         }
-        Direction = new Vector2(objetivo.transform.position.x - transform.position.x,
-            objetivo.transform.position.y - transform.position.y).normalized;
 
-        float anguloRadianes = Mathf.Atan2(objetivo.transform.position.y - transform.position.y, objetivo.transform.position.x - transform.position.x);
-        float anguloGrados = (180 / Mathf.PI) * anguloRadianes - 90;
-        transform.rotation = Quaternion.Euler(0, 0, anguloGrados);
-        distanciaPlayer = PlayerDistance();
-        distanciaAlObjetivo = ObjectiveDistance();
-        Debug.Log("Distancia al objetivo: " + distanciaPlayer);
-        Debug.Log("Distania al Player: " + distanciaAlObjetivo);
+        // Check if objetivo is null or destroyed before accessing it
+        if (objetivo != null && objetivo.Equals(null))
+        {
+            // The object is destroyed, do something about it (e.g., set objetivo to null)
+            objetivo = null;
+        }
+
+        if (objetivo != null && objetivo.activeInHierarchy)
+        {
+            Direction = new Vector2(objetivo.transform.position.x - transform.position.x,
+                objetivo.transform.position.y - transform.position.y).normalized;
+
+            float anguloRadianes = Mathf.Atan2(objetivo.transform.position.y - transform.position.y, objetivo.transform.position.x - transform.position.x);
+            float anguloGrados = (180 / Mathf.PI) * anguloRadianes - 90;
+            transform.rotation = Quaternion.Euler(0, 0, anguloGrados);
+            distanciaPlayer = PlayerDistance();
+            distanciaAlObjetivo = ObjectiveDistance();
+            Debug.Log("Distancia al objetivo: " + distanciaPlayer);
+            Debug.Log("Distania al Player: " + distanciaAlObjetivo);
+        }
     }
+
+
 
     public void PersuitPlayer()
     {
@@ -201,7 +218,8 @@ public class IaMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Bala"))
         {
             currentHealth -= 2.5f;
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
+            Morir();
         }
     }
 

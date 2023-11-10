@@ -8,9 +8,9 @@ public class IaProyectil : MonoBehaviour
     public DoubleMovement DoubleEnemy;
     public CarrierMovement CarrierEnemy;
     public PlayerMovement player;
-    public IaMovement ia;
-    public ItemDestructable resource;
-    public float life = 0.5f;
+    //public IaMovement ia;
+    public //ItemDestructable resource;
+     float life = 0.5f;
     //private Animator anim;
     //public IaMovement MovementActual;
 
@@ -30,8 +30,8 @@ public class IaProyectil : MonoBehaviour
         }
         else { Debug.Log("Disparo Ia nulo Base_Enemy");}
 
-        life += ia.BulletPenetration;
-        transform.Translate(Vector2.up * ia.BulletSpeed * Time.deltaTime);
+        life += BaseEnemy.BulletPenetration;
+        transform.Translate(Vector2.up * BaseEnemy.BulletSpeed * Time.deltaTime);
         //if (SniperEnemy != null)
         //{
         //    transform.Translate(Vector2.up * SniperEnemy.BulletSpeed * Time.deltaTime);
@@ -59,11 +59,12 @@ public class IaProyectil : MonoBehaviour
     void Morir()
     {
         gameObject.SetActive(false);
+        Destroy(gameObject);
     }
-    public void Nacer(IaMovement padre)
-    {
-        ia = padre;
-    }
+    //public void Nacer(IaMovement padre)
+    //{
+    //    ia = padre;
+    //}
     private void OnTriggerEnter2D(Collider2D other) //Llamada de Dano
     {
         if (other.gameObject.CompareTag("Jugador"))
@@ -76,11 +77,12 @@ public class IaProyectil : MonoBehaviour
                 Destroy(player.gameObject);
             }
         }
-        if (other.TryGetComponent<ItemDestructable>(out resource))
+        if (other.TryGetComponent<ItemDestructable>(out var resource))
         {
+            Debug.LogWarning($"Choque con {resource.name}, bala ia");
             life -= resource.damage;
 
-            resource.life -= ia.BulletDamage + ia.BulletPenetration;
+            resource.life -= BaseEnemy.BulletDamage + BaseEnemy.BulletPenetration;
             if (life <= 0f)
             {
                 //anim.SetBool("Death", true);
@@ -88,9 +90,10 @@ public class IaProyectil : MonoBehaviour
             }
             if (resource.life <= 0f)
             {
-                ia.Level += resource.experience;
+               resource.gameObject.SetActive(false);
+                BaseEnemy.Level += resource.experience;
             }
-            Debug.Log("Causo dano");
+            
         }
     }
 }
