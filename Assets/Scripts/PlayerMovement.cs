@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviourPun
     public int Level = 1;
     public int PuntosStats = 0;
     public float Score;
-    private int ScoreNextLevel = 10;
+    private int ScoreNextLevel = 150;
     public float MaxHealth = 10f, HealthRegen, Health;
     private float RegenSecond, RegenCooldown;
     public float BodyDamage = 2f;
@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviourPun
     public TextMeshProUGUI Nivel;
     public TextMeshProUGUI Puntos;
     public TextMeshProUGUI StatsPointNum, StatsPoint;
+    private float esperar;
 
     [Header("Ui In Game")]
     public GameObject Stadistics;
@@ -69,8 +70,14 @@ public class PlayerMovement : MonoBehaviourPun
 
         if (MaxHealth <= 0f)
         {
+            
+            esperar = Time.deltaTime;
             this.gameObject.SetActive(false);
-            Destroy(this);
+            if (esperar > 5f)
+            {
+                Destroy(gameObject);
+            }
+            
         }
 
         if (Input.anyKeyDown && PuntosStats >= 1)

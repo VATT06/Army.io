@@ -7,6 +7,7 @@ public class MenuPausado : MonoBehaviour
 {
 
     [SerializeField] private GameObject menuPausado;
+    
 
     private bool Juegopausado = false;
 
@@ -24,6 +25,7 @@ public class MenuPausado : MonoBehaviour
                 Pausa();
             }
         }
+        
     }
 
 

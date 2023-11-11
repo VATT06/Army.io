@@ -286,7 +286,6 @@ MonoBehaviour:
   sniperEnemy: {fileID: 0}
   doubleEnemy: {fileID: 0}
   carrierEnemy: {fileID: 0}
-  velocidad: {fileID: 0}
 --- !u!1 &1698915860895354894
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,6 +300,7 @@ GameObject:
   - component: {fileID: 1698915860895354893}
   - component: {fileID: 1698915860895354896}
   - component: {fileID: 2288100680872178094}
+  - component: {fileID: 1956209336}
   m_Layer: 0
   m_Name: Enemy_Double
   m_TagString: Enemy
@@ -544,108 +544,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Resources: []
-  FarmersInScene:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  FarmersInScene: []
   player: {fileID: 0}
   farmer: {fileID: 0}
   standbyMode: 1
   persuitMode: 0
   runawayMode: 0
+  jugador: {fileID: 0}
   Level: 0
   MaxHealth: 0
   HealthRegen: 0
-  currentHealth: 100
+  currentHealth: 10
   BodyDamage: 0
-  BulletSpeed: 10
+  BulletSpeed: 2
   BulletPenetration: 0
-  BulletDamage: 0
+  BulletDamage: 2.5
   Reload: 2
-  Velocity: 3
-  alcanceDisparo: 5
+  Velocity: 1.5
+  alcanceDisparo: 7
   distanciaEstacionamiento_Resources: 5
   distanciaAlObjetivo: 0
   distanciaPlayer: 0
   Direction: {x: 0, y: 0}
   objetivo: {fileID: 0}
   camara: {fileID: 0}
+--- !u!114 &1956209336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698915860895354894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34bed23108b4f054192c6d6ece9de8e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Bala: {fileID: 0}
+  life: 15
+  experience: 50
+  damage: 0.6

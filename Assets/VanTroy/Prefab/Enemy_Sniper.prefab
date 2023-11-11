@@ -51,7 +51,6 @@ MonoBehaviour:
   sniperEnemy: {fileID: 2788083381600261255}
   doubleEnemy: {fileID: 0}
   carrierEnemy: {fileID: 0}
-  velocidad: {fileID: 0}
 --- !u!1 &2788083381600261258
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,18 +314,19 @@ MonoBehaviour:
   standbyMode: 1
   persuitMode: 0
   runawayMode: 0
+  jugador: {fileID: 0}
   Level: 0
   MaxHealth: 0
   HealthRegen: 0
-  currentHealth: 100
+  currentHealth: 10
   BodyDamage: 0
-  BulletSpeed: 10
+  BulletSpeed: 2
   BulletPenetration: 0
-  BulletDamage: 0
+  BulletDamage: 2.5
   Reload: 2
-  Velocity: 3
-  alcanceDisparo: 5
-  distanciaEstacionamiento_Resources: 3
+  Velocity: 1.5
+  alcanceDisparo: 9
+  distanciaEstacionamiento_Resources: 5
   distanciaAlObjetivo: 0
   distanciaPlayer: 0
   Direction: {x: 0, y: 0}
@@ -433,8 +433,7 @@ MonoBehaviour:
   disparadores:
   - {fileID: 2788083381279466855}
   proyectil: {fileID: 5094182782849214886, guid: cf65bfb5281a7d14b944203d088e845e, type: 3}
-  IaMovement: {fileID: 0}
-  sniperEnemy: {fileID: 2788083381600261255}
+  IaMovement: {fileID: 3319700765299919302}
+  sniperEnemy: {fileID: 0}
   doubleEnemy: {fileID: 0}
   carrierEnemy: {fileID: 0}
-  velocidad: {fileID: 0}

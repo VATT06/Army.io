@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class S_GameManagement : MonoBehaviour
 {
@@ -10,4 +11,8 @@ public class S_GameManagement : MonoBehaviour
         Debug.Log("Saliendo");
     }
 
+    public void DeVueltaAlMenu()
+    {
+        SceneManager.LoadScene("Carlos_Scene");
+    }
 }

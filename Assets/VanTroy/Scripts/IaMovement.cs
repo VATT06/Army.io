@@ -13,6 +13,8 @@ public class IaMovement : MonoBehaviour
     public bool persuitMode = false;
     public bool runawayMode = false;
 
+    public PlayerMovement jugador;
+
     [Header("Stats")]
     public float Level;
     public float MaxHealth, HealthRegen, currentHealth = 100f;
@@ -86,6 +88,7 @@ public class IaMovement : MonoBehaviour
         {
             // The object is destroyed, do something about it (e.g., set objetivo to null)
             objetivo = null;
+
         }
 
         if (objetivo != null && objetivo.activeInHierarchy)
@@ -207,9 +210,11 @@ public class IaMovement : MonoBehaviour
 
     public void Morir()
     {
-        if (currentHealth<1)
+        if (currentHealth <= 1)
         {
+            jugador.Score += 150;
             Destroy(gameObject);
+            
         }
     }
 
@@ -218,6 +223,7 @@ public class IaMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Bala"))
         {
             currentHealth -= 2.5f;
+            
             collision.gameObject.SetActive(false);
             Morir();
         }
